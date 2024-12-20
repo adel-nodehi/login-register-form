@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, registerSchemaType } from "../../models/registerModel";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
+import { Link } from "react-router";
 
 const RegisterForm: React.FC = () => {
   const {
@@ -52,6 +53,13 @@ const RegisterForm: React.FC = () => {
       </div>
 
       <Button>Sign Up</Button>
+
+      <p className="mt-5 flex gap-1">
+        already registered?
+        <Link to="/login" className="underline">
+          Login
+        </Link>
+      </p>
     </form>
   );
 };

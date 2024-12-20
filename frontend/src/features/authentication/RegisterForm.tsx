@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { registerSchema, registerSchemaType } from "../../models/registerModel";
 import InputField from "../../ui/InputField";
+import Button from "../../ui/Button";
 
 const RegisterForm: React.FC = () => {
   const {
@@ -50,9 +51,7 @@ const RegisterForm: React.FC = () => {
         />
       </div>
 
-      <button className="mt-5 inline-block w-full rounded-lg bg-white px-4 py-2 font-bold tracking-wide text-black">
-        Sign Up
-      </button>
+      <Button>Sign Up</Button>
     </form>
   );
 };

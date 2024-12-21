@@ -8,6 +8,7 @@ import { registerSchema, registerSchemaType } from "../../models/registerModel";
 import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
 import axios from "../../api/axios";
+import From from "../../ui/Form";
 
 const RegisterForm: React.FC = () => {
   const {
@@ -51,11 +52,7 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-80 rounded-lg bg-blue-800 px-2 py-4 text-white shadow-xl"
-      autoComplete="off"
-    >
+    <From onSubmit={handleSubmit(onSubmit)}>
       <h2 className="mb-2 text-3xl font-bold tracking-wide">Register</h2>
 
       <div className="space-y-2">
@@ -90,7 +87,7 @@ const RegisterForm: React.FC = () => {
           Login
         </Link>
       </p>
-    </form>
+    </From>
   );
 };
 

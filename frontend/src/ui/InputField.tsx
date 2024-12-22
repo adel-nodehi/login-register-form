@@ -1,38 +1,38 @@
 import ErrorMessage from "./ErrorMessage";
-import { registerSchemaType } from "../models/registerModel";
-import { UseFormRegister } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 import Input from "./Input";
 import { capitalizeFirstWord } from "../helper/utils";
+import { forwardRef } from "react";
 
 interface InputFieldProps {
-  name: "username" | "password" | "confirmPassword";
-  type: "text" | "password";
-  errorMessage: string | undefined;
+  name: string;
+  type?: "text" | "password";
+  error: FieldError | undefined;
   label?: string;
-  register: UseFormRegister<registerSchemaType>;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  name,
-  type = "text",
-  errorMessage,
-  label,
-  register,
-}: InputFieldProps) => {
-  return (
-    <div className="flex flex-col">
-      <label htmlFor={name}>{capitalizeFirstWord(label || name)}:</label>
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ type = "text", error, label, ...props }, ref) => {
+    return (
+      <div className="flex flex-col">
+        <label htmlFor={props.name}>
+          {capitalizeFirstWord(label || props.name)}:
+        </label>
 
-      <Input
-        id={name}
-        type={type}
-        className={`mb-1 ${errorMessage && "border-red-500"}`}
-        {...register(name)}
-      />
+        <Input
+          ref={ref}
+          id={props.name}
+          type={type}
+          className={`mb-1 ${error?.message && "border-red-500"}`}
+          {...props}
+        />
 
-      <ErrorMessage message={errorMessage} />
-    </div>
-  );
-};
+        <ErrorMessage message={error?.message} />
+      </div>
+    );
+  },
+);
+
+InputField.displayName = "InputField";
 
 export default InputField;

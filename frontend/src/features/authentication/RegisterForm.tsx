@@ -57,25 +57,22 @@ const RegisterForm: React.FC = () => {
 
       <div className="space-y-2">
         <InputField
-          name="username"
           type="text"
-          register={register}
-          errorMessage={errors.username?.message}
+          error={errors.username}
+          {...register("username")}
         />
 
         <InputField
-          name="password"
           type="password"
-          register={register}
-          errorMessage={errors.password?.message}
+          error={errors.password}
+          {...register("password")}
         />
 
         <InputField
-          name="confirmPassword"
           label="confirm Password"
           type="password"
-          register={register}
-          errorMessage={errors.confirmPassword?.message}
+          error={errors.confirmPassword}
+          {...register("confirmPassword")}
         />
       </div>
 

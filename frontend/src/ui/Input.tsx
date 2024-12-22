@@ -1,11 +1,11 @@
-import React, { forwardRef, InputHTMLAttributes, LegacyRef } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-const Input: React.FC<InputProps> = forwardRef(
-  ({ ...inputProps }, ref: LegacyRef<HTMLInputElement> | undefined) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ ...inputProps }, ref) => {
     return (
       <input
         ref={ref}

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { ToastContainer } from "react-toastify";
 
 import FormLayout from "./ui/FormLayout";
 
@@ -9,18 +10,22 @@ import NotFoundPage from "./page/NotFoundPage";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/register" replace />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/register" replace />} />
 
-        <Route element={<FormLayout />}>
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-        </Route>
+          <Route element={<FormLayout />}>
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+          </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+
+      <ToastContainer position="bottom-right" />
+    </>
   );
 };
 

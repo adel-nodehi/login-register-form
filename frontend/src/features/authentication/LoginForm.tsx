@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting: isFormSubmitting },
     reset,
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
@@ -77,7 +77,7 @@ const LoginForm: React.FC = () => {
         />
       </div>
 
-      <Button>Sign In</Button>
+      <Button disable={isFormSubmitting}>Sign In</Button>
 
       <p className="mt-5 flex gap-1">
         Need an Account?

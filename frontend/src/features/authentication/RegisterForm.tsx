@@ -14,7 +14,7 @@ const RegisterForm: React.FC = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting: isFormSubmitting },
   } = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
   });
@@ -76,7 +76,7 @@ const RegisterForm: React.FC = () => {
         />
       </div>
 
-      <Button>Sign Up</Button>
+      <Button disable={isFormSubmitting}>Sign Up</Button>
 
       <p className="mt-5 flex gap-1">
         already registered?

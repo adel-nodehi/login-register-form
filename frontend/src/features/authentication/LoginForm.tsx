@@ -9,6 +9,7 @@ import InputField from "../../ui/InputField";
 import { LoginSchema, LoginSchemaType } from "../../models/loginModel";
 import Button from "../../ui/Button";
 import axios from "../../api/axios";
+import { API_CONFIG } from "../../api/apiConfig";
 
 const LoginForm: React.FC = () => {
   const {
@@ -23,7 +24,7 @@ const LoginForm: React.FC = () => {
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
     try {
       const response = await axios.post(
-        "/auth",
+        API_CONFIG.login,
         JSON.stringify({ user: data.username, pwd: data.password }),
         {
           headers: {

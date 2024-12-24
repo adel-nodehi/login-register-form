@@ -9,6 +9,7 @@ import InputField from "../../ui/InputField";
 import Button from "../../ui/Button";
 import axios from "../../api/axios";
 import From from "../../ui/Form";
+import { API_CONFIG } from "../../api/apiConfig";
 
 const RegisterForm: React.FC = () => {
   const {
@@ -25,7 +26,7 @@ const RegisterForm: React.FC = () => {
   }) => {
     try {
       const response = await axios.post(
-        "/register",
+        API_CONFIG.register,
         JSON.stringify({ user: username, pwd: password }),
         {
           headers: {

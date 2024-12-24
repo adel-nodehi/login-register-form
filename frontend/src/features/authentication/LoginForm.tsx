@@ -10,6 +10,7 @@ import { LoginSchema, LoginSchemaType } from "../../models/loginModel";
 import Button from "../../ui/Button";
 import axios from "../../api/axios";
 import { API_CONFIG } from "../../api/apiConfig";
+import { promiseToast } from "../../helper/toast";
 
 const LoginForm: React.FC = () => {
   const {
@@ -22,6 +23,9 @@ const LoginForm: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
+    const { triggerErrorToast, triggerSuccessToast } =
+      promiseToast("Logging in...");
+
     try {
       const response = await axios.post(
         API_CONFIG.login,
@@ -40,23 +44,27 @@ const LoginForm: React.FC = () => {
       console.log("access token", response.data?.accessToken);
       console.log(response.data?.roles);
 
-      console.log("Login successfully");
-
       reset();
+
+      triggerSuccessToast("Login successfully");
     } catch (err) {
+      let errorMessage;
+
       if (axiosLib.isAxiosError(err)) {
         if (!err.response) {
-          console.log("No server Response");
+          errorMessage = "No server Response";
         } else if (err.response.status === 400) {
-          console.log("Missing Username or Password");
+          errorMessage = "Missing Username or Password";
         } else if (err.response?.status === 401) {
-          console.log("unauthorize");
+          errorMessage = "unauthorize";
         } else {
-          console.log("login failed");
+          errorMessage = "login failed";
         }
       } else {
         console.log("some error occurred with login");
       }
+
+      triggerErrorToast(errorMessage);
     }
   };
 

@@ -10,6 +10,7 @@ import Button from "../../ui/Button";
 import axios from "../../api/axios";
 import From from "../../ui/Form";
 import { API_CONFIG } from "../../api/apiConfig";
+import { promiseToast } from "../../helper/toast";
 
 const RegisterForm: React.FC = () => {
   const {
@@ -24,6 +25,10 @@ const RegisterForm: React.FC = () => {
     username,
     password,
   }) => {
+    const { triggerErrorToast, triggerSuccessToast } = promiseToast(
+      "Registering your account...",
+    );
+
     try {
       const response = await axios.post(
         API_CONFIG.register,
@@ -38,17 +43,22 @@ const RegisterForm: React.FC = () => {
 
       console.log(response.data);
       console.log(response);
-      console.log("Success");
+
+      triggerSuccessToast("you'r account successfully created");
     } catch (err) {
+      let errorMessage = "Something woes wrong, Try again";
+
       if (axiosLib.isAxiosError(err)) {
         if (!err.response) {
-          console.log("No server Response");
+          errorMessage = "No server Response";
         } else if (err.response.status === 409) {
-          console.log("Username Taken");
+          errorMessage = "Username Taken";
         } else {
-          console.log("Registration failed");
+          errorMessage = "Registration failed";
         }
       }
+
+      triggerErrorToast(errorMessage);
     }
   };
 

@@ -28,7 +28,7 @@ body {
   padding: 1rem 0.5rem;
 }
 
-section {
+section:has(> h1) {
   width: 100%;
   max-width: 420px;
   min-height: 400px;

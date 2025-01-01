@@ -1,7 +1,7 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axiosLib from "axios";
 
 import { registerSchema, registerSchemaType } from "../../models/registerModel";
@@ -13,6 +13,8 @@ import { API_CONFIG } from "../../api/apiConfig";
 import { promiseToast } from "../../helper/toast";
 
 const RegisterForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -30,7 +32,7 @@ const RegisterForm: React.FC = () => {
     );
 
     try {
-      const response = await axios.post(
+      await axios.post(
         API_CONFIG.register,
         JSON.stringify({ user: username, pwd: password }),
         {
@@ -41,10 +43,11 @@ const RegisterForm: React.FC = () => {
         },
       );
 
-      console.log(response.data);
-      console.log(response);
+      triggerSuccessToast(
+        "You'r account successfully created, please login to your account",
+      );
 
-      triggerSuccessToast("you'r account successfully created");
+      navigate("/login");
     } catch (err) {
       let errorMessage = "Something woes wrong, Try again";
 

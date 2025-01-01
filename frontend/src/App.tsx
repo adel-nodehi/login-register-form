@@ -14,6 +14,13 @@ import Home from "./page/Home";
 import Editor from "./page/Editor";
 import Admin from "./page/Admin";
 import Lounge from "./page/Lounge";
+import RequireAuth from "./page/RequireAuth";
+
+const ROLES = {
+  Admin: 5150,
+  User: 2001,
+  Editor: 1984,
+};
 
 const App: React.FC = () => {
   return (
@@ -30,10 +37,25 @@ const App: React.FC = () => {
             <Route path="unauthorized" element={<Unauthorized />} />
 
             {/* protected routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="editor" element={<Editor />} />
-            <Route path="admin" element={<Admin />} />
-            <Route path="lounge" element={<Lounge />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/" element={<Home />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
+              <Route path="editor" element={<Editor />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="admin" element={<Admin />} />
+            </Route>
+
+            <Route
+              element={
+                <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
+              }
+            >
+              <Route path="lounge" element={<Lounge />} />
+            </Route>
 
             {/* catch all routes */}
             <Route path="*" element={<NotFoundPage />} />

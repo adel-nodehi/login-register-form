@@ -1,7 +1,7 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import axiosLib from "axios";
 
 import Form from "../../ui/Form";
@@ -11,8 +11,14 @@ import Button from "../../ui/Button";
 import axios from "../../api/axios";
 import { API_CONFIG } from "../../api/apiConfig";
 import { promiseToast } from "../../helper/toast";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginForm: React.FC = () => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     handleSubmit,
     register,
@@ -38,15 +44,18 @@ const LoginForm: React.FC = () => {
         },
       );
 
-      console.log(response.data);
-      console.log(response);
-      console.log(JSON.stringify(response));
-      console.log("access token", response.data?.accessToken);
-      console.log(response.data?.roles);
+      setAuth({
+        user: data.username,
+        password: data.password,
+        accessToken: response.data?.accessToken,
+        roles: response.data?.roles,
+      });
 
       reset();
 
       triggerSuccessToast("Login successfully");
+
+      navigate(from, { replace: true });
     } catch (err) {
       let errorMessage;
 

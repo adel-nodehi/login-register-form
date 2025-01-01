@@ -14,11 +14,14 @@ interface AuthProp {
 }
 
 interface ContextState {
-  auth?: AuthProp;
-  setAuth?: Dispatch<SetStateAction<AuthProp>>;
+  auth: AuthProp;
+  setAuth: Dispatch<SetStateAction<AuthProp>>;
 }
 
-const AuthContext = createContext<ContextState | undefined>({});
+const AuthContext = createContext<ContextState>({
+  auth: {},
+  setAuth() {},
+});
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState({});

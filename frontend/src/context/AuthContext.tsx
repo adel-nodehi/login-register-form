@@ -9,7 +9,7 @@ import {
 interface AuthProp {
   user?: string;
   password?: string;
-  roles?: string[];
+  roles?: number[];
   accessToken?: string;
 }
 

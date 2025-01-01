@@ -1,11 +1,14 @@
-import React from "react";
 import { Link } from "react-router";
 
 const NotFoundPage: React.FC = () => {
   return (
-    <div>
-      page not found. <Link to="/">back to home (click)</Link>
-    </div>
+    <article style={{ padding: "100px" }}>
+      <h1>Oops!</h1>
+      <p>Page Not Found</p>
+      <div className="flexGrow">
+        <Link to="/">Visit Our Homepage</Link>
+      </div>
+    </article>
   );
 };
 

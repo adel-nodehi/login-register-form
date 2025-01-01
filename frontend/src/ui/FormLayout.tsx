@@ -3,9 +3,9 @@ import { Outlet } from "react-router";
 
 const FormLayout: React.FC = () => {
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-blue-400">
+    <div className="flex min-h-dvh items-center justify-center">
       <Outlet />
-    </main>
+    </div>
   );
 };
 

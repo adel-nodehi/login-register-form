@@ -3,6 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useDebugValue,
   useState,
 } from "react";
 
@@ -40,6 +41,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 const useAuth = () => {
   const auth = useContext(AuthContext);
+
+  useDebugValue(auth, (auth) => (auth.auth.user ? "Logged in" : "Logged out"));
+
   if (auth === undefined)
     throw new Error("AuthContext can't be use outside the AuthProvider");
   return auth;

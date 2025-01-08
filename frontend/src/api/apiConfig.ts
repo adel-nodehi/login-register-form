@@ -3,6 +3,7 @@ const API_CONFIG = {
   register: "/register",
   users: "/users",
   refresh: "/refresh",
+  logout: "/logout",
 };
 
 export { API_CONFIG };

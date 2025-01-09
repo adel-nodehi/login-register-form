@@ -14,7 +14,7 @@ import { promiseToast } from "../../helper/toast";
 import { useAuth } from "../../context/AuthContext";
 
 const LoginForm: React.FC = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, allowPersist, toggleAllowPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -96,6 +96,19 @@ const LoginForm: React.FC = () => {
       </div>
 
       <Button disable={isFormSubmitting}>Sign In</Button>
+
+      <div className="mt-1 flex items-center space-x-1">
+        <input
+          id="persist"
+          type="checkbox"
+          value={String(allowPersist)}
+          onChange={toggleAllowPersist}
+          className="size-3 accent-blue-500"
+        />
+        <label htmlFor="persist" className="m-0 text-sm">
+          Remember this divas
+        </label>
+      </div>
 
       <p className="mt-5 flex gap-1">
         Need an Account?

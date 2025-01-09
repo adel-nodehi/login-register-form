@@ -5,7 +5,7 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import { Outlet } from "react-router";
 
 const PersistLogin: React.FC = () => {
-  const { auth } = useAuth();
+  const { auth, allowPersist } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
 
@@ -16,7 +16,7 @@ const PersistLogin: React.FC = () => {
 
     const persistLogin = async () => {
       try {
-        await refresh();
+        if (allowPersist) await refresh();
       } catch (err) {
         console.error(err);
       } finally {
@@ -31,7 +31,7 @@ const PersistLogin: React.FC = () => {
     return () => {
       isMounted = false;
     };
-  }, [refresh, auth.accessToken]);
+  }, [refresh, auth.accessToken, allowPersist]);
 
   useEffect(() => {
     console.log(`isLoading: ${isLoading}`);
@@ -39,7 +39,15 @@ const PersistLogin: React.FC = () => {
     console.log(auth);
   }, [isLoading, auth]);
 
-  return isLoading ? <p>Loading...</p> : <Outlet />;
+  if (!allowPersist) return <Outlet />;
+
+  return !allowPersist ? (
+    <Outlet />
+  ) : isLoading ? (
+    <p>Loading...</p>
+  ) : (
+    <Outlet />
+  );
 };
 
 export default PersistLogin;

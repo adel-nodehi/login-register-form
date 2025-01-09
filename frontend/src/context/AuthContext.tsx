@@ -4,8 +4,10 @@ import {
   SetStateAction,
   useContext,
   useDebugValue,
+  useEffect,
   useState,
 } from "react";
+import useToggle from "../hooks/useToggle";
 
 interface AuthProp {
   user?: string;
@@ -17,6 +19,8 @@ interface AuthProp {
 interface ContextState {
   auth: AuthProp;
   setAuth: Dispatch<SetStateAction<AuthProp>>;
+  allowPersist?: boolean;
+  toggleAllowPersist?: () => void;
 }
 
 const AuthContext = createContext<ContextState>({
@@ -26,12 +30,21 @@ const AuthContext = createContext<ContextState>({
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState({});
+  const [allowPersist, toggleAllowPersist] = useToggle(
+    JSON.parse(String(localStorage.getItem("allowPersist"))) || false,
+  );
+
+  useEffect(() => {
+    localStorage.setItem("allowPersist", JSON.stringify(allowPersist));
+  }, [allowPersist]);
 
   return (
     <AuthContext.Provider
       value={{
         auth,
         setAuth,
+        allowPersist,
+        toggleAllowPersist,
       }}
     >
       {children}
